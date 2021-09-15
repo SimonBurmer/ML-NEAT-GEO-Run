@@ -13,20 +13,19 @@ class Game:
         pygame.init()
         pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Dino-Run")
+        pygame.display.set_caption("GEO-Run")
         self.clock = pygame.time.Clock()
         self.speed = 100
         self.gernation = 0
 
     def eval_genomes(self, genomes, config):
-
-        self.gernation += 1
-
         """
         runs the simulation of the current population of
         players and sets their fitness based on the distance they
         reach in the game.
         """
+
+        self.gernation += 1
 
         self.score = 0
 
@@ -38,28 +37,28 @@ class Game:
         # neural network associated with the genome and the
         # bird object that uses that network to play
 
-        #list with neural network of each genum
+        # list with neural network of each genum
         self.nets = []
-        #list with player
+        # list with player
         self.players = []
-        #list whit genums
+        # list whit genums
         self.myGenomes = []
         
         for genome_id, genome in genomes: # len(genomes) == 30 because of POP_SITZE = 30 
             genome.fitness = 0  # start with fitness level of 0
-            #creat the first version of a neural network for each genum
+            # creat the first version of a neural network for each genum
             net = neat.nn.FeedForwardNetwork.create(genome, config)
             self.nets.append(net)
             self.players.append(Player(self))
             self.myGenomes.append(genome)
         
-        #start Game
+        # start Game
         self.run()
 
     def run(self):
         # Game Loop
         self.playing = True
-        while self.playing and len(self.players) > 0: #only run the game is at least one player is alife
+        while self.playing and len(self.players) > 0: # only run the game is at least one player is alife
             self.clock.tick(self.speed)
             self.events()
             self.update()
@@ -73,16 +72,16 @@ class Game:
         for obs in self.obstacles:
             obs.update()
         
-        #determine the next obstacle
+        # determine the next obstacle
         for i,obs in enumerate(self.obstacles):
             if obs.rect.right > PLAYER_X:
                 nextObstIndex = i
                 break
 
-        for x, player in enumerate(self.players):  # give each bird a fitness of 0.1 for each frame it stays alive
+        for x, player in enumerate(self.players): # give each player a fitness of 0.1 for each frame it stays alive
             self.myGenomes[x].fitness += 0.1
             
-            #Var. for Input layer
+            # Var. for Input layer
             self.nextObs_dis = player.rect.right - self.obstacles[nextObstIndex].rect.left
             self.nextObs_hight = self.obstacles[nextObstIndex].rect.height
             self.nextObs_width = self.obstacles[nextObstIndex].rect.width
@@ -111,16 +110,16 @@ class Game:
                 for i,player in enumerate(self.players):
                     hits = pygame.sprite.collide_rect(player, obs)
 
-                    #if a player collide with an obstacle -> fitness -= 1
-                    #he is also deleted from all lists
-                    #bad code!! because deleting something from a iterating list 
+                    # if a player collide with an obstacle -> fitness -= 1
+                    # he is also deleted from all lists
+                    # bad code!! because deleting something from a iterating list 
                     if hits:
                         self.myGenomes[i].fitness -= 1
                         self.nets.pop(i)
                         self.myGenomes.pop(i)
                         self.players.pop(i)
 
-        #kill old obstacles and count up score 
+        # kill old obstacles and count up score 
         for i, obs in enumerate(self.obstacles):
             if obs.rect.left < -60:
                 self.score += 10
@@ -131,7 +130,7 @@ class Game:
                     genome.fitness += 5
                 
 
-        #only spawn new obstacles when the last one is far enough away
+        # only spawn new obstacles when the last one is far enough away
         if self.obstacles[-1].rect.x < 800:
             self.obstacles.append(Obstacle())
 
@@ -156,7 +155,7 @@ class Game:
         for obs in self.obstacles:
             obs.draw(self.screen)
         
-        #drawing important Informations
+        # drawing important Informations
         self.draw_text("Score: "+str(self.score), 48, WHITE, WIDTH / 2, HEIGHT / 6)
         self.draw_text("Generation: " + str(self.gernation), 30, WHITE, WIDTH / 2, HEIGHT /3.5)
         self.draw_text("Alive: " +str(len(self.players)), 30, WHITE, WIDTH / 2, HEIGHT /3)
@@ -168,7 +167,7 @@ class Game:
         # *after* drawing everything, flip the display
         pygame.display.flip()
 
-    #for easy text creating 
+    # for easy text creating 
     def draw_text(self, text, size, color, x, y):
         font = pygame.font.SysFont(None, size)
         text_surface = font.render(text, True, color)
@@ -182,7 +181,7 @@ class Game:
 
 def run(config_file):
 
-    #runs the NEAT algorithm to train a neural network.
+    # runs the NEAT algorithm to train a neural network.
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,neat.DefaultSpeciesSet, neat.DefaultStagnation,config_file)
 
     # Create the population, which is the top-level object for a NEAT run.
@@ -190,9 +189,8 @@ def run(config_file):
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
-    stats = neat.StatisticsReporter()
-    p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.StatisticsReporter())
+    #p.add_reporter(neat.Checkpointer(5))
 
     #eval_genomes is called once per gernation 
     #eval_genomes it the Fitness_Function

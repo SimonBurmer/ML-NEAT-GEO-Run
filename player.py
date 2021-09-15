@@ -15,18 +15,18 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (PLAYER_X, PLAYER_Y)
 
-        #vectors are necessary for the players physic
+        # vectors are necessary for the players physic
         self.pos = vec(PLAYER_X, PLAYER_Y)
-        #for up force
+        # for up force
         self.velocity = vec(0, 0)
-        #for garvity
+        # for garvity
         self.acceleration = vec(0, 0)
         self.jumping = False
         self.jumpCount = 0
     
 
     def jump(self):
-        #jump only if standing on a platform
+        # jump only if standing on a platform
         self.rect.x += 1 # detect whether something is 1 pixle under the player
         hits = pygame.sprite.collide_rect(self, self.game.ground)
         self.rect.x -= 1

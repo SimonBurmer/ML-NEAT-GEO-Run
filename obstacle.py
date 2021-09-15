@@ -2,11 +2,11 @@ import random
 import pygame
 from settings import *
 
-#Represents to obstacles in the game
+# Represents to obstacles in the game
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        #for random sitze of the obstacles 
+        # for random sitze of the obstacles 
         x = random.randrange(40, 90)
         y = random.randrange(80, 180)
 
@@ -14,7 +14,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
 
-        #place where obstacle is print first time 
+        # place where obstacle is print first time 
         self.rect.x = WIDTH + random.randrange(0, 200)
         self.rect.y = HEIGHT - self.image.get_height() - GROUNDHEIGHT
     

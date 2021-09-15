@@ -2,7 +2,7 @@ import random
 import pygame
 from settings import *
 
-#lightweight class, only purpose is to represent the games floor
+# lightweight class, only purpose is to represent the games floor
 class Ground(pygame.sprite.Sprite):
 
     def __init__(self, x, y, w, h):

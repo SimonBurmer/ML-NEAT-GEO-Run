@@ -1,18 +1,18 @@
 [NEAT]
-#genums mit den höchsten fit-Wert werden weiter entwickelt 
+# genums with the highest fit values are further developed 
 fitness_criterion     = max
-#gibt es ein genum welches fit=100 hat, wird das Programm beendet
+    # if there is a genum which has fit=5000, the program is terminated
 fitness_threshold     = 5000
-#gibt an wie viele genums pro Gerneration erzeugt werden
+   # indicates how many genums are created per generation
 pop_size              = 100
 reset_on_extinction   = False
 
 [DefaultGenome]
 # node activation options
 activation_default      = tanh
-# willst du das sich die Activation-function willkürlich veränder, dann gib hier die Wahrscheinlichekt an
+    # if you want the activation-function to change arbitrarily, then enter the probabilities here
 activation_mutate_rate  = 0.0
-# ist eine activation_mutate_rate >0 gegeben werden Activations-functions von hier gewählt
+    # an activation_mutate_rate >0 is given activation functions are selected from the activation_options list
 activation_options      = tanh
 
 # node aggregation options
@@ -20,8 +20,8 @@ aggregation_default     = sum
 aggregation_mutate_rate = 0.0
 aggregation_options     = sum
 
-# node bias options       #Bais siehe Bild NEAT OneNote
-# ist eine Konstante die mit in die Berechnungen einer Node(Neurons) einfliest
+# node bias options      
+    # is a constant that is included in the calculations of a node (neuron)
 bias_init_mean          = 0.0
 bias_init_stdev         = 1.0
 bias_max_value          = 30.0   
@@ -35,13 +35,13 @@ compatibility_disjoint_coefficient = 1.0
 compatibility_weight_coefficient   = 0.5
 
 # connection add/remove rates 
-# Wie Wahrscheinlich es ist, dass eine Connection bei einer neuen Generation hinzugefügt oder entfernt wird
+    # how likely it is that a connection will be added or removed on a new generation
 conn_add_prob           = 0.5
 conn_delete_prob        = 0.5
 
 # connection enable options
-# Connections können entweder aktiv oder unaktiv sein
-# enabled_mutate_rate ist die Wahrscheinlichkeit das sich der Zustand ändert
+    # Connections can be either active or inactive
+    # enabled_mutate_rate is the probability that this state is changing
 enabled_default         = True
 enabled_mutate_rate     = 0.01
 
@@ -67,8 +67,8 @@ response_mutate_rate    = 0.0
 response_replace_rate   = 0.0
 
 # connection weight options
-#Max Gewicht einer Connection ---> weight_max_value
-#MIn Gewicht einer Connection ---> weight_min_value
+    #Max weight of a connection ---> weight_max_value
+    #Min weight of a connectio ---> weight_min_value
 weight_init_mean        = 0.0
 weight_init_stdev       = 1.0
 weight_max_value        = 30   
@@ -82,8 +82,8 @@ compatibility_threshold = 3.0
 
 
 [DefaultStagnation]
-#was passiert, wenn eine Stagnation eintritt, wenn sich fit nicht ändernt
-#ändert sich fit 20 generationen nicht, wird das programm beenndet 
+    #what happens when stagnation occurs, (if fit does not change)
+    #if fit 20 generations does not change, the program is terminated 
 species_fitness_func = max
 max_stagnation       = 20
 species_elitism      = 2
